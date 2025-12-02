@@ -1,9 +1,11 @@
+import { Link, useLocation } from "wouter";
 import { useAuth } from "./AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import PostCard, { Post } from "./PostCard";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Plus } from "lucide-react";
 
 export default function HomePage() {
   const { user, isAuthenticated } = useAuth();
@@ -35,10 +37,20 @@ export default function HomePage() {
       </div>
 
       <section>
-        <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
-          <MessageSquare className="h-5 w-5 text-primary" />
-          Recent Posts
-        </h2>
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <h2 className="flex items-center gap-2 text-xl font-semibold">
+            <MessageSquare className="h-5 w-5 text-primary" />
+            Recent Posts
+          </h2>
+          {isAuthenticated && (
+            <Link href="/post/create">
+              <Button size="sm" className="gap-2" data-testid="button-create-post">
+                <Plus className="h-4 w-4" />
+                Create Post
+              </Button>
+            </Link>
+          )}
+        </div>
 
         <div className="space-y-4" data-testid="container-posts-list">
           {isLoading ? (

@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "./ThemeProvider";
 import { useAuth } from "./AuthContext";
-import { Sun, Moon, LogOut, Search, Home, Users } from "lucide-react";
+import { Sun, Moon, LogOut, Search, Home, Users, Plus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -84,6 +84,12 @@ export default function Navbar() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
+                <Link href="/post/create">
+                  <DropdownMenuItem className="gap-2 cursor-pointer" data-testid="button-create-post-menu">
+                    <Plus className="h-4 w-4" />
+                    Create Post
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem
                   onClick={handleLogout}
                   className="gap-2 text-destructive focus:text-destructive"
