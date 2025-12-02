@@ -40,11 +40,19 @@
     "category": "JavaScript"
   },
   {
-    "title": "test",
-    "content": "1234",
-    "category": "test",
+    "title": "우효~",
+    "content": "눈누난나",
+    "category": "점심",
     "author": "admin",
-    "id": "3542028b-9ce1-4893-90b3-999c3a13aac8",
-    "createdAt": "2025-12-02T12:55:33.707Z"
+    "id": "c2ce3dd3-6044-44c4-b66c-c65f34b6f56f",
+    "createdAt": "2025-12-02T13:21:34.222Z"
+  },
+  {
+    "title": "하핫",
+    "content": "호호",
+    "category": "상엽",
+    "author": "yeop0715",
+    "id": "8c0a5948-326b-4163-87c1-2a6a68918bcb",
+    "createdAt": "2025-12-02T13:22:28.779Z"
   }
 ]

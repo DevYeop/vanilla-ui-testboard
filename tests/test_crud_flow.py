@@ -7,10 +7,17 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
+# ========== 설정: 여기서 변수 수정하세요 ==========
 BASE_URL = "http://localhost:5000"
+TEST_USERNAME = "admin"           # 테스트할 사용자명 수정
+TEST_PASSWORD = "admin123"        # 테스트할 비밀번호 수정
+WAIT_TIMEOUT = 10                 # 요소 로드 대기 시간 (초)
+# ==============================================
 
 # 크롬 옵션 설정
 chrome_options = Options()
@@ -20,7 +27,8 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 # 드라이버 생성
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
-driver.implicitly_wait(10)
+driver.implicitly_wait(WAIT_TIMEOUT)
+wait = WebDriverWait(driver, WAIT_TIMEOUT)
 
 try:
     print("="*60)
@@ -30,13 +38,13 @@ try:
     # 1단계: 로그인
     print("\n[1단계] 로그인 중...")
     driver.get(f"{BASE_URL}/login")
-    time.sleep(1)
+    time.sleep(2)
     
-    username_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="input-username"]')
+    username_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="input-username"]')))
     password_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="input-password"]')
     
-    username_input.send_keys("admin")
-    password_input.send_keys("admin123")
+    username_input.send_keys(TEST_USERNAME)
+    password_input.send_keys(TEST_PASSWORD)
     
     login_button = driver.find_element(By.CSS_SELECTOR, '[data-testid="button-login-submit"]')
     login_button.click()
@@ -47,12 +55,12 @@ try:
     # 2단계: 게시글 생성 페이지로 이동
     print("\n[2단계] 게시글 생성 페이지로 이동...")
     driver.get(f"{BASE_URL}/post/create")
-    time.sleep(1)
+    time.sleep(3)
     print("✓ 게시글 생성 페이지 로드됨")
     
     # 3단계: 게시글 작성
     print("\n[3단계] 게시글 작성 중...")
-    title_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="input-post-title"]')
+    title_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="input-post-title"]')))
     content_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="textarea-post-content"]')
     category_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="input-post-category"]')
     
@@ -121,7 +129,7 @@ try:
     
     # 8단계: 게시글 수정
     print("\n[8단계] 게시글 내용 수정...")
-    title_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="input-post-title"]')
+    title_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="input-post-title"]')))
     content_input = driver.find_element(By.CSS_SELECTOR, '[data-testid="textarea-post-content"]')
     
     # 기존 텍스트 삭제 후 새 텍스트 입력
